@@ -1,0 +1,35 @@
+---
+
+- name: Add PGDG APT key
+  apt_key:
+    url:  https://www.postgresql.org/media/keys/ACCC4CF8.asc
+  when: pgbouncer_install_from_pgdg
+  tags: postgresql.install
+
+- name: Add PGDG APT repository
+  apt_repository:
+    repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main"
+  when: pgbouncer_install_from_pgdg
+  tags: postgresql.install
+
+- name: Install pgbouncer
+  apt:
+    name: pgbouncer
+
+- name: Add configuration
+  template:
+    src: pgbouncer.ini.j2
+    dest: /etc/pgbouncer/pgbouncer.ini
+  notify: restart pgbouncer
+
+- name: Add userlist
+  template:
+    src: userlist.txt.j2
+    dest: /etc/pgbouncer/userlist.txt
+  notify: restart pgbouncer
+
+- name: Ensure pgbouncer is enabled and started
+  service:
+    name: pgbouncer
+    state: started
+    enabled: true
