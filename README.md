@@ -1,5 +1,7 @@
 # Ansible role for pgbouncer
 
+[![CircleCI](https://circleci.com/gh/angristan/ansible-pgbouncer.svg?style=svg)](https://circleci.com/gh/angristan/ansible-pgbouncer)
+
 This role will install pgbouncer for the [PGDG APT repository](https://wiki.postgresql.org/wiki/Apt) (optional), and handle configuration and users.
 
 To generate the `userlist.txt`, I recommend using [this script](https://github.com/angristan/pgbouncer_userlist_generator).
